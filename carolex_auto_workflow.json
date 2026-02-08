@@ -1,0 +1,495 @@
+{
+  "name": "BrofromChina copy",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "8c389263-9444-48af-8234-ae63620fdddc",
+        "options": {}
+      },
+      "id": "704bc5ed-6867-4100-a7a1-0c20ba7b8cf4",
+      "name": "Instagram Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        -20
+      ],
+      "webhookId": "8c389263-9444-48af-8234-ae63620fdddc"
+    },
+    {
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "url": "https://graph.facebook.com/v17.0/<IG_BUSINESS_ID>/messages",
+        "jsonParameters": true,
+        "options": {}
+      },
+      "name": "Send Reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        580,
+        -20
+      ],
+      "id": "91e77605-ef80-4889-8bdd-a627d89f8e58"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.user_name }} {{ $json.body.clients_name }} {{ $json.body.user_number }} {{ $json.body.user_sviaz}} {{ $json.body.user_auto}}",
+        "options": {
+          "systemMessage": "You are an AI request processor. Your task is to receive client data (name, business niche, phone number, and request) from the webhook and accurately record it in Airtable. You do not generate responses, analyze input, or modify the data. Your only function is structured data processing.\n\nHow to process data:\nReceive incoming data from the webhook. It will include:\nuser_name\nuser_niche\nuser_query\nuser_phone\nuser_svyaz\nValidate that all required fields are present. If any are missing, continue processing only with available data.\nSend the data to Airtable without modification.\nIf the webhook response contains an error or system message, do NOT generate a response. Simply complete the process.\n→ Store user_name, clients_name, user_query, user_number, user_sviaz, user_auto in Airtable."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        140,
+        -160
+      ],
+      "id": "64e73871-c01d-46bf-acb1-1514828d4a90",
+      "name": "AI Agent Operator"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        140,
+        20
+      ],
+      "id": "de6f703d-0c7a-4f32-9a4e-f42435c9da5b",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "HQk0S6pIHWAXGq7F",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {},
+        "path": "95c0a07b-f3b9-44f6-ad11-276bfb7242db"
+      },
+      "id": "728a5a96-9aa4-4a0c-b193-ff3229c0720f",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -660,
+        -220
+      ],
+      "webhookId": "95c0a07b-f3b9-44f6-ad11-276bfb7242db",
+      "credentials": {
+        "telegramApi": {
+          "id": "ohsKkgWVsdNOhTkc",
+          "name": "Telegram account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fe7ecc99-e1e8-4a5e-bdd6-6fce9757b234",
+              "name": "text",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cfc14620-c510-4678-b54f-440fe57cf0b3",
+      "name": "Set 'Text'",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -280,
+        -220
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.voice.file_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Voice"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8c844924-b2ed-48b0-935c-c66a8fd0c778",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7260ba10-6c42-452b-9fe4-f2707bf76037",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -460,
+        -220
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}",
+        "path": "d52b2dfc-2576-43ab-adf6-ede13ef7fff9"
+      },
+      "id": "abccc44c-e43e-43d6-b60c-e21591a9ff23",
+      "name": "Download File",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -280,
+        -400
+      ],
+      "webhookId": "d52b2dfc-2576-43ab-adf6-ede13ef7fff9",
+      "credentials": {
+        "telegramApi": {
+          "id": "2IgJnMevqKV1yhXb",
+          "name": "Telegram account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "id": "7ca54455-3018-46be-a93e-7f399c3ddab7",
+      "name": "Transcribe",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        -60,
+        -320
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "61PTqJKtmDER8aWm",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        },
+        "path": "028718cf-a537-43d6-a6f1-5b83a85af2c9"
+      },
+      "id": "40f14787-1526-425b-854e-4ec4af0e41ca",
+      "name": "Response",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        500,
+        -240
+      ],
+      "webhookId": "028718cf-a537-43d6-a6f1-5b83a85af2c9",
+      "credentials": {
+        "telegramApi": {
+          "id": "ohsKkgWVsdNOhTkc",
+          "name": "Telegram account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appKhB71acH5ztKgP",
+          "mode": "list",
+          "cachedResultName": "Seller",
+          "cachedResultUrl": "https://airtable.com/appKhB71acH5ztKgP"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblrVeJugKkIFy8PF",
+          "mode": "list",
+          "cachedResultName": "Input",
+          "cachedResultUrl": "https://airtable.com/appKhB71acH5ztKgP/tblrVeJugKkIFy8PF"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "user_name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('user_name', ``, 'string') }}",
+            "clients_name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('clients_name', ``, 'string') }}",
+            "user_number": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('user_number', ``, 'string') }}",
+            "user_sviaz": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('user_sviaz', ``, 'string') }}",
+            "user_auto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('user_auto', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "user_name",
+              "displayName": "user_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "clients_name",
+              "displayName": "clients_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "user_number",
+              "displayName": "user_number",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "user_sviaz",
+              "displayName": "user_sviaz",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "user_auto",
+              "displayName": "user_auto",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Created",
+              "displayName": "Created",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        340,
+        60
+      ],
+      "id": "a9e7168d-5722-4dd7-bff9-de4731e7c93b",
+      "name": "Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "xn1z1eCDQxlTbZrV",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Instagram Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Operator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent Operator": {
+      "main": [
+        [
+          {
+            "node": "Send Reply",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent Operator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Download File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set 'Text'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File": {
+      "main": [
+        [
+          {
+            "node": "Transcribe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Operator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set 'Text'": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Operator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Operator",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "pinData": {},
+  "triggerCount": 0,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

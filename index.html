@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pavel Laputski | NoCodePortfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">NoCode<span>Portfolio</span></div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#workflows">Workflows</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <i data-lucide="menu"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <h1 class="fade-in">Junior Low-code / <br><span>No-code Developer</span></h1>
+                    <p class="fade-in delay-1">Automating business processes with modern tools and AI agents. Passionate
+                        about efficiency and new technologies.</p>
+                    <div class="cta-buttons支撑 fade-in delay-2">
+                        <a href="#contact" class="btn btn-primary">Get in Touch</a>
+                        <a href="#projects" class="btn btn-secondary">View My Work</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-bg"></div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-grid">
+                    <div class="about-card glass">
+                        <p>I am a Junior Low-code/No-code Developer with a genuine interest in process automation. My
+                            background includes basic Python knowledge and practical experience with automation tools
+                            like n8n and Make.</p>
+                        <p>Currently, I am exploring advanced agentic AI with Antigravity from Google, constantly
+                            learning and developing from more experienced team members.</p>
+                        <div class="language-tags">
+                            <span class="tag">English B2</span>
+                            <span class="tag">Polish</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <div class="container">
+                <h2 class="section-title">Technical Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-category glass">
+                        <div class="category-header">
+                            <i data-lucide="blocks"></i>
+                            <h3>Low-code / No-code</h3>
+                        </div>
+                        <ul>
+                            <li>n8n (Advanced Workflows)</li>
+                            <li>Make (Automation)</li>
+                            <li>Webflow (Basics)</li>
+                            <li>Power Automate (Learning)</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category glass">
+                        <div class="category-header">
+                            <i data-lucide="bot"></i>
+                            <h3>AI & Agents</h3>
+                        </div>
+                        <ul>
+                            <li>Antigravity (Google)</li>
+                            <li>LLM Integration</li>
+                            <li>AI Chatbot Logic</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category glass">
+                        <div class="category-header">
+                            <i data-lucide="code-2"></i>
+                            <h3>Programming</h3>
+                        </div>
+                        <ul>
+                            <li>Python (Basic: Classes, Lists, etc.)</li>
+                            <li>HTML5 / CSS3</li>
+                            <li>JavaScript (Basics)</li>
+                            <li>API Integration (REST/JSON)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-list">
+                    <div class="project-card glass">
+                        <div class="project-info">
+                            <h3>AI-Powered Automation for Carolex Auto</h3>
+                            <p class="project-desc">A comprehensive customer support and lead management system
+                                developed for <strong>Carolex Auto</strong>, a car dealership based in China
+                                specializing in international sales. This project transformed their manual communication
+                                into an intelligent, 24/7 automated operation.</p>
+
+                            <div class="project-details">
+                                <h4>Key Highlights:</h4>
+                                <ul>
+                                    <li><strong>Challenge:</strong> Managing high-volume international inquiries across
+                                        time zones for Chinese car exports.</li>
+                                    <li><strong>Solution:</strong> Developed an end-to-end n8n system integrating
+                                        Telegram/WhatsApp with OpenAI (GPT) for intelligent, human-like responses.</li>
+                                    <li><strong>CRM Integration:</strong> Automated lead capture and data syncing with
+                                        Google Sheets/CRM, eliminating manual entry.</li>
+                                </ul>
+
+                                <div class="project-stats">
+                                    <div class="stat"><strong>100%</strong> 24/7 Response</div>
+                                    <div class="stat"><strong>~10h</strong> Weekly Savings</div>
+                                </div>
+                            </div>
+
+                            <div class="project-actions">
+                                <a href="https://github.com/Pasha10083?tab=repositories" target="_blank"
+                                    class="btn btn-secondary btn-sm">
+                                    <i data-lucide="github"></i> View Workflow on GitHub
+                                </a>
+                                <a href="carolex_auto_workflow.json" download="carolex_auto_workflow.json"
+                                    class="btn btn-secondary btn-sm">
+                                    <i data-lucide="file-json"></i> Get JSON Template
+                                </a>
+                            </div>
+
+                            <div class="project-tags">
+                                <span class="tag">n8n</span>
+                                <span class="tag">OpenAI API</span>
+                                <span class="tag">Telegram API</span>
+                                <span class="tag">Business Automation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workflows Section -->
+        <section id="workflows" class="section">
+            <div class="container">
+                <h2 class="section-title">n8n Workflows</h2>
+                <div class="workflow-container glass">
+                    <div class="workflow-placeholder">
+                        <i data-lucide="workflow"></i>
+                        <p>Visualizing intelligent automation patterns and integration flows.</p>
+                        <a href="https://github.com/Pasha10083" target="_blank" class="btn btn-secondary btn-sm">View on
+                            GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="contact-card glass">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i data-lucide="mail"></i>
+                            <a href="mailto:pashalaputski@gmail.com">pashalaputski@gmail.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <i data-lucide="linkedin"></i>
+                            <a href="https://www.linkedin.com/in/pavellaputski" target="_blank">LinkedIn Profile</a>
+                        </div>
+                        <div class="contact-item">
+                            <i data-lucide="github"></i>
+                            <a href="https://github.com/Pasha10083" target="_blank">GitHub Portfolio</a>
+                        </div>
+                    </div>
+                    <p class="availability-status">
+                        <span class="pulse"></span> Available for work during afternoon/evening hours and weekends.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Pavel Laputski. Built with passion for automation.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
