@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuToggle) {
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
             // Change icon if needed
             const icon = menuToggle.querySelector('i');
             if (navLinks.classList.contains('active')) {
@@ -47,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Close mobile menu if open
                 if (navLinks.classList.contains('active')) {
                     navLinks.classList.remove('active');
+                    document.body.classList.remove('menu-open');
                     const icon = menuToggle.querySelector('i');
                     icon.setAttribute('data-lucide', 'menu');
                     lucide.createIcons();
